@@ -203,6 +203,10 @@ abstract class FileLoader extends BaseFileLoader
             }
             // check to make sure the expected class exists
             if (!$r) {
+                if (file_exists($path)) {
+                    require_once($path);    // if there is a syntax error, this reveals it
+                }
+               
                 throw new InvalidArgumentException(sprintf('Expected to find class "%s" in file "%s" while importing services from resource "%s", but it was not found! Check the namespace prefix used with the resource.', $class, $path, $pattern));
             }
 
